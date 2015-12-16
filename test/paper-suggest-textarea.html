@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+	<head>
+		<title>paper-suggest-textarea</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../web-component-tester/browser.js"></script>
+		<script src="../../test-fixture/test-fixture-mocha.js"></script>
+
+		<link rel="import" href="../paper-suggest-textarea.html">
+		<link rel="import" href="../../test-fixture/test-fixture.html">
+	</head>
+	<body>
+
+		<test-fixture id="TrivialElement">
+			<template>
+				<paper-suggest-textarea></paper-suggest-textarea>
+			</template>
+		</test-fixture>
+
+		<script>
+			suite('<paper-suggest-textarea>', function() {
+				suite('suggest behavior', function() {
+					var element;
+
+					setup(function() {
+						element = fixture('TrivialElement');
+					});
+
+					test('Extract complete suggest query', function() {
+						expect(element._calcSuggestQuery('@joe', 4)).to.be.eql('joe');
+					});
+					test('Ignores value before special character', function() {
+						expect(element._calcSuggestQuery('a @joe', 6)).to.be.eql('joe');
+					});
+					test('Ignores value after cursor position', function() {
+						expect(element._calcSuggestQuery('@joe', 2)).to.be.eql('j');
+					});
+					test('Ignores earlier suggest area', function() {
+						expect(element._calcSuggestQuery('@joe @pat', 9)).to.be.eql('pat');
+					});
+					test('Ignores suggest area after cursor position', function() {
+						expect(element._calcSuggestQuery('@joe', 0)).to.be.eql('');
+					});
+					test('Returns empty without special character', function() {
+						expect(element._calcSuggestQuery('abc', 2)).to.be.eql('');
+					});
+				});
+
+				suite('compute value with IDs', function() {
+					var element;
+
+					setup(function() {
+						element = fixture('TrivialElement');
+					});
+
+					test('Replaces name with ID', function() {
+						expect(element._computeValueWithIds('Joe P', [{ id:'joe', name: 'Joe P' }])).to.be.eql('@joe');
+					});
+					test('Preserves surrounding text', function() {
+						expect(element._computeValueWithIds('a Joe P b', [{ id:'joe', name: 'Joe P' }])).to.be.eql('a @joe b');
+					});
+					test('Replaces only first occurance of the same name', function() {
+						expect(element._computeValueWithIds('Joe P Joe P', [{ id:'joe', name: 'Joe P' }])).to.be.eql('@joe Joe P');
+					});
+					test('Executes multiple replacements', function() {
+						expect(element._computeValueWithIds('Joe Pat', [{ id:'joe', name: 'Joe' }, { id:'pat', name: 'Pat' }])).to.be.eql('@joe @pat');
+					});
+				});
+
+				suite('replace current selection', function() {
+					var element;
+
+					setup(function() {
+						element = fixture('TrivialElement');
+					});
+
+					test('Replaces current selection', function() {
+						element.value = '@Joe';
+						expect(element._replaceCurrentSelection('Joe', 4)).to.be.eql('Joe');
+					});
+					test('Preserves text before special character', function() {
+						element.value = 'a @Joe';
+						expect(element._replaceCurrentSelection('Joe', 6)).to.be.eql('a Joe');
+					});
+					test('Preserves other replace text before special character', function() {
+						element.value = '@Pat @Joe';
+						expect(element._replaceCurrentSelection('Joe', 10)).to.be.eql('@Pat Joe');
+					});
+					test('Preserves text after cursor', function() {
+						element.value = '@Joe b';
+						expect(element._replaceCurrentSelection('Joe', 4)).to.be.eql('Joe b');
+					});
+				});
+
+				suite('adding replacement', function() {
+					var element;
+
+					setup(function() {
+						element = fixture('TrivialElement');
+						element.clearReplacements();
+					});
+
+					test('Adds a replacement', function() {
+						var element = fixture('TrivialElement');
+						element.addReplacement('joe', 'Joe P');
+						expect(element._replacements.length).to.be.eql(1);
+						expect(element._replacements[0].id).to.be.eql('joe');
+						expect(element._replacements[0].name).to.be.eql('Joe P');
+					});
+					test('Adds multiple replacements', function() {
+						element.addReplacement('joe', 'Joe');
+						element.addReplacement('pat', 'Pat');
+						expect(element._replacements.length).to.be.eql(2);
+					});
+					test('Clears replacements', function() {
+						element.addReplacement('joe', 'Joe');
+						// Pre-condition
+						expect(element._replacements.length).to.be.eql(1);
+
+						element.clearReplacements();
+						expect(element._replacements.length).to.be.eql(0);
+					});
+				});
+			});
+		</script>
+
+	</body>
+</html>

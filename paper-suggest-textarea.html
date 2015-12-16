@@ -1,0 +1,115 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-textarea.html">
+
+<dom-module id="paper-suggest-textarea">
+
+	<template>
+   		<paper-textarea id='text' placeholder=[[placeholder]] value={{value}} max-rows=[[maxRows]]></paper-textarea>
+	</template>
+</dom-module>
+
+<script>
+
+(function() {
+
+	Polymer({
+		is: 'paper-suggest-textarea',
+		properties: {
+			value: {
+				type: String,
+				notify: true
+			},
+			placeholder: {
+				type: String
+			},
+			specialChar: {
+				type: String,
+				value: '@'
+			},
+			maxRows: Number,
+
+			// Text for which suggestions should be provided
+			suggestQuery: {
+				type: String,
+				notify: true,
+				computed: '_computeSuggestQuery(value)',
+				readOnly: true
+			},
+
+			valueWithIds: {
+				type: String,
+				notify: true,
+				computed: '_computeValueWithIds(value,_replacements)',
+				readOnly: true
+			},
+
+			// Contains replacements like {id:'joe', name:'Joe Plumber'}
+			_replacements: {
+				type: Array,
+				value: []
+			}
+		},
+
+		/* Public methods */
+		focus: function() {
+			// TODO: Simplify once focus() is exposed by <paper-textarea>
+			this.$.text.inputElement.textarea.focus();
+		},
+		// Adds with which an ID the name should be replaced
+		addReplacement: function(id, name) {
+			this.push('_replacements', {id: id, name: name});
+		},
+		// Replaces the currently entered text with a specific name
+		replaceCurrentSelection: function(name) {
+			this.value = this._replaceCurrentSelection(name, this._getCursorPos());
+		},
+		// Removes all added replacements
+		clearReplacements: function() {
+			this._replacements = [];
+		},
+
+		/* Private methods */
+		// Separate method to simplify unit testing
+		_replaceCurrentSelection: function(name, cursorPos) {
+			var specialCharPos = this._getSpecialCharPosition(this.value, cursorPos);
+			if (specialCharPos < 0) {
+				return;
+			}
+
+			return this.value.substring(0, specialCharPos) + name + this.value.substring(cursorPos);
+		},
+		_computeSuggestQuery: function(value) {
+			return this._calcSuggestQuery(value, this._getCursorPos());
+		},
+		// Separate method to simplify unit testing
+		_calcSuggestQuery: function(value, cursorPos) {
+			// Find last special character before the cursor position
+			var specialCharPos = this._getSpecialCharPosition(value, cursorPos);
+			if (specialCharPos < 0) {
+				return '';
+			}
+
+			return value.substring(specialCharPos + 1, cursorPos);
+		},
+		_computeValueWithIds(value,_replacements) {
+			var valueWithIds = value;
+			_replacements.forEach(function(replacement) {
+				valueWithIds = valueWithIds.replace(replacement.name, this.specialChar + replacement.id);
+			}.bind(this));
+			return valueWithIds;
+		},
+		// Helper
+		_getCursorPos: function() {
+			// TODO: Remove once the cursor position is bound
+			// @see https://github.com/Polymer/paper-input/issues/185
+			return this.$.text.inputElement.textarea.selectionStart;
+		},
+		_getSpecialCharPosition: function(value, cursorPos) {
+			// Finds the last special character before the cursor
+			return value.substring(0, cursorPos).lastIndexOf(this.specialChar);
+		}
+	});
+
+})();
+
+</script>
