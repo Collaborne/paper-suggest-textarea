@@ -79,19 +79,23 @@
 
 					test('Replaces current selection', function() {
 						element.value = '@Joe';
-						expect(element._replaceCurrentSelection('Joe', 4)).to.be.eql('Joe');
+						element._replaceCurrentSelection('Joe', 4);
+						expect(element.value).to.be.eql('Joe');
 					});
 					test('Preserves text before special character', function() {
 						element.value = 'a @Joe';
-						expect(element._replaceCurrentSelection('Joe', 6)).to.be.eql('a Joe');
+						element._replaceCurrentSelection('Joe', 6);
+						expect(element.value).to.be.eql('a Joe');
 					});
 					test('Preserves other replace text before special character', function() {
 						element.value = '@Pat @Joe';
-						expect(element._replaceCurrentSelection('Joe', 10)).to.be.eql('@Pat Joe');
+						element._replaceCurrentSelection('Joe', 10);
+						expect(element.value).to.be.eql('@Pat Joe');
 					});
 					test('Preserves text after cursor', function() {
 						element.value = '@Joe b';
-						expect(element._replaceCurrentSelection('Joe', 4)).to.be.eql('Joe b');
+						element._replaceCurrentSelection('Joe', 4);
+						expect(element.value).to.be.eql('Joe b');
 					});
 				});
 

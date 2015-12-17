@@ -61,7 +61,7 @@
 		},
 		// Replaces the currently entered text with a specific name
 		replaceCurrentSelection: function(name) {
-			this.value = this._replaceCurrentSelection(name, this._getCursorPos());
+			this._replaceCurrentSelection(name, this._getCursorPos());
 		},
 		// Removes all added replacements
 		clearReplacements: function() {
@@ -76,7 +76,12 @@
 				return;
 			}
 
-			return this.value.substring(0, specialCharPos) + name + this.value.substring(cursorPos);
+			this.value = this.value.substring(0, specialCharPos) + name + this.value.substring(cursorPos);
+
+			// Set cursor to the end of the replaced text
+			var newCursorPos = specialCharPos + name.length;
+			this.$.text.inputElement.textarea.selectionStart = newCursorPos;
+			this.$.text.inputElement.textarea.selectionEnd = newCursorPos;
 		},
 		_computeSuggestQuery: function(value) {
 			return this._calcSuggestQuery(value, this._getCursorPos());

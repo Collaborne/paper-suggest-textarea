@@ -24,6 +24,7 @@
 			scope.onReplace = function(e) {
 				this.$.textarea.addReplacement(this.id, this.suggestQuery);
 				this.$.textarea.replaceCurrentSelection(this.suggestQuery);
+				this.$.textarea.focus();
 			};
 		</script>
 	</body>
