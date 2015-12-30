@@ -1,36 +1,16 @@
+_[Demo and API Docs](http://collaborne.github.io/paper-suggest-textarea)_
+
+
 paper-suggest-textarea [![Bower version](https://badge.fury.io/bo/paper-suggest-textarea.svg)](http://badge.fury.io/bo/paper-suggest-textarea) [![Travis state](https://travis-ci.org/Collaborne/paper-suggest-textarea.svg?branch=master)](https://travis-ci.org/Collaborne/paper-suggest-textarea)
 =========
 
- Material Design textarea that provides suggestions as the user types. The web components are built with [Polymer 1.x](https://www.polymer-project.org).
+A Material Design textarea that provides suggestions as the user types. The web components are built with [Polymer 1.x](https://www.polymer-project.org).
 
 ![Screenshot](/doc/screenshot.png "Screenshot")
 
-
-## Usage
+To use this element:
 
 `bower install paper-suggest-textarea`
-
-```html
-<paper-suggest-textarea
-  value={{value}}
-  suggest-query={{suggestQuery}}
-  value-with-ids={{valueWithIds}}>
-</paper-suggest-textarea>
-```
-
-
-## Properties
-
-These properties are available for `paper-suggest-textarea`:
-
-Property              | Type   | Description
---------------------- | ------ | ----------------------------
-**value**             | String | Value as shown in the textarea
-**placeholder**       | String | Placeholder of the textarea
-**maxRows**           | Number | Maximum number of rows for the textarea
-**specialChar**       | String | Character indicating when suggestions should be shown (default @)
-**suggestQuery**      | String | Query for which suggestions should be shown
-**valueWithIds**      | String | Value of the textarea but all names replaced by IDs
 
 
 ## License

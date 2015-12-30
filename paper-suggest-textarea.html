@@ -1,11 +1,26 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-input/paper-textarea.html">
 
+<!--
+A Material Design textarea that provides suggestions as the user types.
+
+### Example
+```html
+<paper-suggest-textarea
+  value={{value}}
+  suggest-query={{suggestQuery}}
+  value-with-ids={{valueWithIds}}>
+</paper-suggest-textarea>
+```
+
+@demo demo/index.html
+-->
 <dom-module id="paper-suggest-textarea">
 
 	<template>
    		<paper-textarea id='text' placeholder=[[placeholder]] value={{value}} max-rows=[[maxRows]]></paper-textarea>
 	</template>
+	
 </dom-module>
 
 <script>
@@ -15,20 +30,37 @@
 	Polymer({
 		is: 'paper-suggest-textarea',
 		properties: {
+			/**
+			 * Value as shown in the textarea
+			 */
 			value: {
 				type: String,
 				notify: true
 			},
+
+			/**
+			 * Placeholder of the textarea
+			 */
 			placeholder: {
 				type: String
 			},
+			
+			/**
+			 * Character indicating when suggestions should be shown
+			 */
 			specialChar: {
 				type: String,
 				value: '@'
 			},
+			
+			/**
+			 * Maximum number of rows for the textarea
+			 */
 			maxRows: Number,
 
-			// Text for which suggestions should be provided
+			/**
+			 * Query for which suggestions should be shown
+			 */
 			suggestQuery: {
 				type: String,
 				notify: true,
@@ -36,6 +68,9 @@
 				readOnly: true
 			},
 
+			/**
+			 * Value of the textarea but all names replaced by IDs
+			 */
 			valueWithIds: {
 				type: String,
 				notify: true,
