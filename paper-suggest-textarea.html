@@ -131,7 +131,7 @@ A Material Design textarea that provides suggestions as the user types.
 
 			return value.substring(specialCharPos + 1, cursorPos);
 		},
-		_computeValueWithIds(value,_replacements) {
+		_computeValueWithIds: function(value,_replacements) {
 			var valueWithIds = value;
 			_replacements.forEach(function(replacement) {
 				valueWithIds = valueWithIds.replace(replacement.name, this.specialChar + replacement.id);
