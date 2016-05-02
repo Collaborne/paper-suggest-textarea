@@ -97,6 +97,11 @@
 						element._replaceCurrentSelection('Joe', 4);
 						expect(element.value).to.be.eql('Joe b');
 					});
+					test('Replaces longer text', function() {
+						element.value = 'a @J b';
+						element._replaceCurrentSelection('Joe', 4);
+						expect(element.value).to.be.eql('a Joe b');
+					});
 				});
 
 				suite('adding replacement', function() {
