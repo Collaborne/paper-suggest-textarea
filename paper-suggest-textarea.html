@@ -20,7 +20,7 @@ A Material Design textarea that provides suggestions as the user types.
 	<template>
    		<paper-textarea id="text" placeholder=[[placeholder]] value={{value}} max-rows=[[maxRows]]></paper-textarea>
 	</template>
-	
+
 </dom-module>
 
 <script>
@@ -44,7 +44,7 @@ A Material Design textarea that provides suggestions as the user types.
 			placeholder: {
 				type: String
 			},
-			
+
 			/**
 			 * Character indicating when suggestions should be shown
 			 */
@@ -52,7 +52,7 @@ A Material Design textarea that provides suggestions as the user types.
 				type: String,
 				value: '@'
 			},
-			
+
 			/**
 			 * Maximum number of rows for the textarea
 			 */
@@ -78,33 +78,52 @@ A Material Design textarea that provides suggestions as the user types.
 				readOnly: true
 			},
 
-			// Contains replacements like {id:'joe', name:'Joe Plumber'}
+			/**
+			 * Contains replacements like {id:'joe', name:'Joe Plumber'}
+			 */
 			_replacements: {
 				type: Array,
 				value: []
 			}
 		},
 
-		/* Public methods */
+		/**
+		 * Focuses on the input element
+		 */
 		focus: function() {
 			// TODO: Simplify once focus() is exposed by <paper-textarea>
 			this.$.text.inputElement.textarea.focus();
 		},
-		// Adds with which an ID the name should be replaced
+
+		/**
+		 * Adds with which an ID the name should be replaced
+		 * @param  {String} id   ID beloning to the name
+		 * @param  {String} name Name beloning to the ID
+		 */
 		addReplacement: function(id, name) {
 			this.push('_replacements', {id: id, name: name});
 		},
-		// Replaces the currently entered text with a specific name
+
+		/**
+		 * Replaces the currently entered text with a specific name
+		 * @param  {String} name Full name
+		 */
 		replaceCurrentSelection: function(name) {
 			this._replaceCurrentSelection(name, this._getCursorPos());
 		},
-		// Removes all added replacements
+
+		/**
+		 * Removes all stored replacements
+		 */
 		clearReplacements: function() {
 			this._replacements = [];
 		},
 
-		/* Private methods */
-		// Separate method to simplify unit testing
+		/**
+		 * Separate method to simplify unit testing
+		 * @param  {String} name      Replaces the text at the cursor with the given name
+		 * @param  {Number} cursorPos Position where the cursor is within the text
+		 */
 		_replaceCurrentSelection: function(name, cursorPos) {
 			var specialCharPos = this._getSpecialCharPosition(this.value, cursorPos);
 			if (specialCharPos < 0) {
