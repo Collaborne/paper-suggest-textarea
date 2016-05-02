@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 	<head>
 	    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
@@ -9,18 +10,28 @@
 	<body>
 		<template is="dom-bind">
 			<h2>Element</h2>
-			<paper-suggest-textarea id='textarea' value={{value}} suggest-query={{suggestQuery}} value-with-ids={{valueWithIds}} placeholder='Enter a text like "Hi @joe"'></paper-suggest-textarea>
+			<paper-suggest-textarea
+				id="textarea"
+				value="{{value}}"
+				value-with-ids="{{valueWithIds}}"
+				suggest-query="{{suggestQuery}}"
+				placeholder="Enter a text like 'Hi @joe'">
+			</paper-suggest-textarea>
 
 			<h2>Control</h2>
 			<div class="vertical-section">
-				<div hidden=[[!suggestQuery]]>Replace <input is="iron-input" bind-value={{suggestQuery}}></input> with: <input is="iron-input" bind-value={{id}}></input> <button on-tap='onReplace'>Replace</button></div>
+				<div hidden$="[[!suggestQuery]]">
+					Replace <input is="iron-input" bind-value="{{suggestQuery}}"></input>
+					with: <input is="iron-input" bind-value="{{id}}"></input>
+					<button on-tap="onReplace">Replace</button>
+				</div>
 				<br>
 				<div>Value with IDs <b>[[valueWithIds]]</b></div>
 			</div>
 		</paper-suggest-textarea>
 
 		<script>
-			var scope = document.querySelector("template[is=dom-bind]");
+			var scope = document.querySelector('template[is=dom-bind]');
 			scope.onReplace = function(e) {
 				this.$.textarea.addReplacement(this.id, this.suggestQuery);
 				this.$.textarea.replaceCurrentSelection(this.suggestQuery);
