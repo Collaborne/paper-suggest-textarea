@@ -1,6 +1,7 @@
 <!doctype html>
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-input/paper-textarea.html">
+<link rel="import" href="suggest-textarea-behavior.html">
 
 <!--
 A Material Design textarea that provides suggestions as the user types.
@@ -14,12 +15,12 @@ A Material Design textarea that provides suggestions as the user types.
 </paper-suggest-textarea>
 ```
 
-@demo demo/index.html
+@demo demo/paper-suggest-textarea.html
 -->
 <dom-module id="paper-suggest-textarea">
 
 	<template>
-   		<paper-textarea id="text" placeholder="[[placeholder]]" value="{{value}}" max-rows="[[maxRows]]"></paper-textarea>
+		<paper-textarea id="text" placeholder="[[placeholder]]" value="{{value::input}}" max-rows="[[maxRows]]"></paper-textarea>
 	</template>
 
 </dom-module>
@@ -30,143 +31,13 @@ A Material Design textarea that provides suggestions as the user types.
 
 	Polymer({
 		is: 'paper-suggest-textarea',
-		properties: {
-			/**
-			 * Value as shown in the textarea
-			 */
-			value: {
-				type: String,
-				notify: true
-			},
 
-			/**
-			 * Placeholder of the textarea
-			 */
-			placeholder: {
-				type: String
-			},
+		behaviors: [
+			Polymer.SuggestTextareaBehavior
+		],
 
-			/**
-			 * Character indicating when suggestions should be shown
-			 */
-			specialChar: {
-				type: String,
-				value: '@'
-			},
-
-			/**
-			 * Maximum number of rows for the textarea
-			 */
-			maxRows: Number,
-
-			/**
-			 * Query for which suggestions should be shown
-			 */
-			suggestQuery: {
-				type: String,
-				notify: true,
-				computed: '_computeSuggestQuery(value)',
-				readOnly: true
-			},
-
-			/**
-			 * Value of the textarea but all names replaced by IDs
-			 */
-			valueWithIds: {
-				type: String,
-				notify: true,
-				computed: '_computeValueWithIds(value,_replacements)',
-				readOnly: true
-			},
-
-			/**
-			 * Contains replacements like {id:'joe', name:'Joe Plumber'}
-			 */
-			_replacements: {
-				type: Array,
-				value: []
-			}
-		},
-
-		/**
-		 * Focuses on the input element
-		 */
-		focus: function() {
-			// TODO: Simplify once focus() is exposed by <paper-textarea>
-			this.$.text.inputElement.textarea.focus();
-		},
-
-		/**
-		 * Adds with which an ID the name should be replaced
-		 * @param  {String} id   ID beloning to the name
-		 * @param  {String} name Name beloning to the ID
-		 */
-		addReplacement: function(id, name) {
-			this.push('_replacements', {id: id, name: name});
-		},
-
-		/**
-		 * Replaces the currently entered text with a specific name
-		 * @param  {String} name Full name
-		 */
-		replaceCurrentSelection: function(name) {
-			this._replaceCurrentSelection(name, this._getCursorPos());
-		},
-
-		/**
-		 * Removes all stored replacements
-		 */
-		clearReplacements: function() {
-			this._replacements = [];
-		},
-
-		/**
-		 * Separate method to simplify unit testing
-		 * @param  {String} name      Replaces the text at the cursor with the given name
-		 * @param  {Number} cursorPos Position where the cursor is within the text
-		 */
-		_replaceCurrentSelection: function(name, cursorPos) {
-			var specialCharPos = this._getSpecialCharPosition(this.value, cursorPos);
-			if (specialCharPos < 0) {
-				return;
-			}
-
-			this.value = this.value.substring(0, specialCharPos) + name + this.value.substring(cursorPos);
-
-			// Set cursor to the end of the replaced text
-			var newCursorPos = specialCharPos + name.length;
-			this.$.text.inputElement.textarea.selectionStart = newCursorPos;
-			this.$.text.inputElement.textarea.selectionEnd = newCursorPos;
-		},
-		_computeSuggestQuery: function(value) {
-			return this._calcSuggestQuery(value, this._getCursorPos());
-		},
-		// Separate method to simplify unit testing
-		_calcSuggestQuery: function(value, cursorPos) {
-			// Find last special character before the cursor position
-			var specialCharPos = this._getSpecialCharPosition(value, cursorPos);
-			if (specialCharPos < 0) {
-				return '';
-			}
-
-			return value.substring(specialCharPos + 1, cursorPos);
-		},
-		_computeValueWithIds: function(value,_replacements) {
-			var valueWithIds = value;
-			_replacements.forEach(function(replacement) {
-				valueWithIds = valueWithIds.replace(replacement.name, this.specialChar + replacement.id);
-			}.bind(this));
-			return valueWithIds;
-		},
-		// Helper
-		_getCursorPos: function() {
-			// TODO: Remove once the cursor position is bound
-			// @see https://github.com/Polymer/paper-input/issues/185
-			return this.$.text.inputElement.textarea.selectionStart;
-		},
-		_getSpecialCharPosition: function(value, cursorPos) {
-			// Finds the last special character before the cursor
-			return value.substring(0, cursorPos).lastIndexOf(this.specialChar);
+		get textarea() {
+			return this.$.text.inputElement.textarea;
 		}
 	});
 

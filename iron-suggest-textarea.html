@@ -19,6 +19,11 @@ A textarea that provides suggestions as the user types.
 <dom-module id="iron-suggest-textarea">
 
 	<template>
+		<style>
+			#text {
+				@apply(--suggest-textarea);
+			}
+		</style>
 		<textarea id="text" placeholder="[[placeholder]]" value="{{value::input}}" max-rows="[[maxRows]]"></textarea>
 	</template>
 
