@@ -1,0 +1,45 @@
+<!doctype html>
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="suggest-textarea-behavior.html">
+
+<!--
+A textarea that provides suggestions as the user types.
+
+### Example
+```html
+<iron-suggest-textarea
+  value={{value}}
+  suggest-query={{suggestQuery}}
+  value-with-ids={{valueWithIds}}>
+</iron-suggest-textarea>
+```
+
+@demo demo/index.html
+-->
+<dom-module id="iron-suggest-textarea">
+
+	<template>
+		<textarea id="text" placeholder="[[placeholder]]" value="{{value::input}}" max-rows="[[maxRows]]"></textarea>
+	</template>
+
+</dom-module>
+
+<script>
+
+(function() {
+
+	Polymer({
+		is: 'iron-suggest-textarea',
+
+		behaviors: [
+			Polymer.SuggestTextareaBehavior
+		],
+
+		get textarea() {
+			return this.$.text;
+		}
+	});
+
+})();
+
+</script>
