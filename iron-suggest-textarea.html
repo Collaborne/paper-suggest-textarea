@@ -24,7 +24,13 @@ A textarea that provides suggestions as the user types.
 				@apply(--suggest-textarea);
 			}
 		</style>
-		<textarea id="text" placeholder="[[placeholder]]" value="{{value::input}}" max-rows="[[maxRows]]"></textarea>
+		<textarea
+			id="text"
+			placeholder="[[placeholder]]"
+			value="{{value::input}}"
+			max-rows="[[maxRows]]"
+			on-focus="_onFocus">
+		</textarea>
 	</template>
 
 </dom-module>
@@ -42,6 +48,15 @@ A textarea that provides suggestions as the user types.
 
 		get textarea() {
 			return this.$.text;
+		},
+
+		/**
+		 * Fired when the user focuses the textarea
+		 *
+		 * @event focus
+		 */
+		_onFocus: function() {
+			this.fire('focus');
 		}
 	});
 
