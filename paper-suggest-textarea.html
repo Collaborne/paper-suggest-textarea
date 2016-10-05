@@ -20,7 +20,13 @@ A Material Design textarea that provides suggestions as the user types.
 <dom-module id="paper-suggest-textarea">
 
 	<template>
-		<paper-textarea id="text" placeholder="[[placeholder]]" value="{{value::input}}" max-rows="[[maxRows]]"></paper-textarea>
+		<paper-textarea
+			id="text"
+			placeholder="[[placeholder]]"
+			value="{{value::input}}"
+			max-rows="[[maxRows]]"
+			autofocus="[[autofocus]]"
+		></paper-textarea>
 	</template>
 
 </dom-module>
