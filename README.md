@@ -4,7 +4,7 @@ _[Demo and API Docs](http://collaborne.github.io/paper-suggest-textarea)_
 paper-suggest-textarea [![Bower version](https://badge.fury.io/bo/paper-suggest-textarea.svg)](http://badge.fury.io/bo/paper-suggest-textarea) [![Travis state](https://travis-ci.org/Collaborne/paper-suggest-textarea.svg?branch=master)](https://travis-ci.org/Collaborne/paper-suggest-textarea)
 =========
 
-A Material Design textarea that provides suggestions as the user types. The web components are built with [Polymer 1.x](https://www.polymer-project.org).
+A Material Design textarea that provides suggestions as the user types. The web components are built with [Polymer](https://www.polymer-project.org).
 
 ![Screenshot](/doc/screenshot.png "Screenshot")
 

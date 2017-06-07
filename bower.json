@@ -3,7 +3,7 @@
   "authors": [
     "collaborne"
   ],
-  "description": "A Material Design textarea that provides suggestions as the user types (Polymer 1.x)",
+  "description": "A Material Design textarea that provides suggestions as the user types (Polymer)",
   "main": "paper-suggest-textarea.html",
   "keywords": [
     "web-components",
@@ -20,13 +20,11 @@
     "**/.*"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.0.0",
-    "paper-input": "PolymerElements/paper-input#^1.0.0"
+    "polymer": "Polymer/polymer#^2.0.0",
+    "paper-input": "PolymerElements/paper-input#^2.0.0"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
-    "test-fixture": "polymerelements/test-fixture#^1.0.0",
-    "web-component-tester": "*",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+    "iron-component-page": "PolymerElements/iron-component-page#^2.0.0",
+    "web-component-tester": "*"
   }
 }

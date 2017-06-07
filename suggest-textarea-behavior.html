@@ -136,7 +136,11 @@ Polymer.SuggestTextareaBehavior = {
 
 		return value.substring(specialCharPos + 1, cursorPos);
 	},
-	_computeValueWithIds: function(value,_replacements) {
+	_computeValueWithIds: function(value, _replacements) {
+		if (!value || !_replacements) {
+			// Ignore initialization call
+			return;
+		}
 		var valueWithIds = value;
 		_replacements.forEach(function(replacement) {
 			valueWithIds = valueWithIds.replace(replacement.name, this.specialChar + replacement.id);
