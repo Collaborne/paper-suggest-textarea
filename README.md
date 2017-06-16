@@ -1,7 +1,4 @@
-_[Demo and API Docs](http://collaborne.github.io/paper-suggest-textarea)_
-
-
-paper-suggest-textarea [![Bower version](https://badge.fury.io/bo/paper-suggest-textarea.svg)](http://badge.fury.io/bo/paper-suggest-textarea) [![Travis state](https://travis-ci.org/Collaborne/paper-suggest-textarea.svg?branch=master)](https://travis-ci.org/Collaborne/paper-suggest-textarea)
+paper-suggest-textarea [![Bower version](https://badge.fury.io/bo/paper-suggest-textarea.svg)](http://badge.fury.io/bo/paper-suggest-textarea) [![Travis state](https://travis-ci.org/Collaborne/paper-suggest-textarea.svg?branch=master)](https://travis-ci.org/Collaborne/paper-suggest-textarea) [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/Collaborne/paper-suggest-textarea)
 =========
 
 A Material Design textarea that provides suggestions as the user types. The web components are built with [Polymer](https://www.polymer-project.org).
@@ -11,6 +8,17 @@ A Material Design textarea that provides suggestions as the user types. The web 
 To use this element:
 
 `bower install paper-suggest-textarea`
+
+```html
+<paper-suggest-textarea
+    id="textarea"
+    value="{{value}}"
+    value-with-ids="{{valueWithIds}}"
+    suggest-query="{{suggestQuery}}"
+    autofocus
+    placeholder="Enter a text like 'Hi @joe'">
+</paper-suggest-textarea>
+```
 
 
 ## License
