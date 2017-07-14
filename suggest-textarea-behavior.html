@@ -111,6 +111,10 @@ Polymer.SuggestTextareaBehavior = {
 	 * @param  {Number} cursorPos Position where the cursor is within the text
 	 */
 	_replaceCurrentSelection: function(name, cursorPos) {
+		if (typeof name === 'undefined' || name === null) {
+			throw new Error(`Name must be a string but is '${name}'.`);
+		}
+
 		var specialCharPos = this._getSpecialCharPosition(this.value, cursorPos);
 		if (specialCharPos < 0) {
 			return;

@@ -102,6 +102,19 @@
 						element._replaceCurrentSelection('Joe', 4);
 						expect(element.value).to.be.eql('a Joe b');
 					});
+					test('Replaces empty name', function() {
+						element.value = 'a @J b';
+						element._replaceCurrentSelection('', 4);
+						expect(element.value).to.be.eql('a  b');
+					});
+					test('Throws error when trying to replace with null', function() {
+						element.value = 'a @J b';
+						assert.throws(() => element._replaceCurrentSelection(null, 4), Error);
+					});
+					test('Throws error when trying to replace with undefined', function() {
+						element.value = 'a @J b';
+						assert.throws(() => element._replaceCurrentSelection(undefined, 4), Error);
+					});
 				});
 
 				suite('adding replacement', function() {
