@@ -1,4 +1,7 @@
 paper-suggest-textarea [![Bower version](https://badge.fury.io/bo/paper-suggest-textarea.svg)](http://badge.fury.io/bo/paper-suggest-textarea) [![Travis state](https://travis-ci.org/Collaborne/paper-suggest-textarea.svg?branch=master)](https://travis-ci.org/Collaborne/paper-suggest-textarea) [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/Collaborne/paper-suggest-textarea)
+
+[![Published on Vaadin  Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/Collabornepaper-suggest-textarea)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/Collabornepaper-suggest-textarea.svg)](https://vaadin.com/directory/component/Collabornepaper-suggest-textarea)
 =========
 
 A Material Design textarea that provides suggestions as the user types. The web components are built with [Polymer](https://www.polymer-project.org).
