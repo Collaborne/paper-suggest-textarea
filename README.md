@@ -6,22 +6,9 @@ paper-suggest-textarea [![Bower version](https://badge.fury.io/bo/paper-suggest-
 
 A Material Design textarea that provides suggestions as the user types. The web components are built with [Polymer](https://www.polymer-project.org).
 
-![Screenshot](/doc/screenshot.png "Screenshot")
-
 To use this element:
 
-`bower install paper-suggest-textarea`
-
-```html
-<paper-suggest-textarea
-    id="textarea"
-    value="{{value}}"
-    value-with-ids="{{valueWithIds}}"
-    suggest-query="{{suggestQuery}}"
-    autofocus
-    placeholder="Enter a text like 'Hi @joe'">
-</paper-suggest-textarea>
-```
+`npm install @collaborne/paper-suggest-textarea`
 
 
 ## License

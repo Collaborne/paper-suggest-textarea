@@ -1,116 +1,110 @@
-<!doctype html>
-<link rel="import" href="../polymer/polymer.html">
-
-<script>
-var Polymer = Polymer || {};
-
 /**
  * textarea that provides suggestions as the user types
- *
- * @polymerBehavior Polymer.SuggestTextareaBehavior
  */
-Polymer.SuggestTextareaBehavior = {
-	properties: {
-		/**
-		 * Value as shown in the textarea
-		 */
-		value: {
-			type: String,
-			notify: true
-		},
+export const SuggestTextareaMixin = parent => class SuggestTextareaMixinImpl extends parent {
+	static get properties() {
+		return {
+			/**
+			 * Value as shown in the textarea
+			 */
+			value: {
+				type: String,
+				notify: true
+			},
 
-		/**
-		 * Placeholder of the textarea
-		 */
-		placeholder: {
-			type: String
-		},
+			/**
+			 * Placeholder of the textarea
+			 */
+			placeholder: {
+				type: String
+			},
 
-		/**
-		 * True if the input area should be automatically focused
-		 */
-		autofocus: Boolean,
+			/**
+			 * True if the input area should be automatically focused
+			 */
+			autofocus: Boolean,
 
-		/**
-		 * Character indicating when suggestions should be shown
-		 */
-		specialChar: {
-			type: String,
-			value: '@'
-		},
+			/**
+			 * Character indicating when suggestions should be shown
+			 */
+			specialChar: {
+				type: String,
+				value: '@'
+			},
 
-		/**
-		 * Maximum number of rows for the textarea
-		 */
-		maxRows: Number,
+			/**
+			 * Maximum number of rows for the textarea
+			 */
+			maxRows: Number,
 
-		/**
-		 * Query for which suggestions should be shown
-		 */
-		suggestQuery: {
-			type: String,
-			notify: true,
-			computed: '_computeSuggestQuery(value)',
-			readOnly: true
-		},
+			/**
+			 * Query for which suggestions should be shown
+			 */
+			suggestQuery: {
+				type: String,
+				notify: true,
+				computed: '_computeSuggestQuery(value)',
+				readOnly: true
+			},
 
-		/**
-		 * Value of the textarea but all names replaced by IDs
-		 */
-		valueWithIds: {
-			type: String,
-			notify: true,
-			computed: '_computeValueWithIds(value,_replacements)',
-			readOnly: true
-		},
+			/**
+			 * Value of the textarea but all names replaced by IDs
+			 */
+			valueWithIds: {
+				type: String,
+				notify: true,
+				computed: '_computeValueWithIds(value,_replacements)',
+				readOnly: true
+			},
 
-		/**
-		 * Contains replacements like {id:'joe', name:'Joe Plumber'}
-		 */
-		_replacements: {
-			type: Array,
-			value: []
-		}
-	},
+			/**
+			 * Contains replacements like {id:'joe', name:'Joe Plumber'}
+			 */
+			_replacements: {
+				type: Array,
+				value: []
+			}
+		};
+	}
 
 	/**
 	 * Focuses on the input element
 	 */
-	focus: function() {
+	focus() {
 		// TODO: Simplify once focus() is exposed by <paper-textarea>
 		this.textarea.focus();
-	},
+	}
 
 	/**
 	 * Adds with which an ID the name should be replaced
 	 * @param  {String} id   ID beloning to the name
 	 * @param  {String} name Name beloning to the ID
 	 */
-	addReplacement: function(id, name) {
+	addReplacement(id, name) {
 		this.push('_replacements', {id: id, name: name});
-	},
+	}
 
 	/**
 	 * Replaces the currently entered text with a specific name
 	 * @param  {String} name Full name
 	 */
-	replaceCurrentSelection: function(name) {
+	replaceCurrentSelection(name) {
 		this._replaceCurrentSelection(name, this._getCursorPos());
-	},
+	}
 
 	/**
 	 * Removes all stored replacements
 	 */
-	clearReplacements: function() {
+	clearReplacements() {
 		this._replacements = [];
-	},
+	}
 
 	/**
 	 * Separate method to simplify unit testing
 	 * @param  {String} name      Replaces the text at the cursor with the given name
 	 * @param  {Number} cursorPos Position where the cursor is within the text
 	 */
-	_replaceCurrentSelection: function(name, cursorPos) {
+	_replaceCurrentSelection(name, cursorPos) {
 		if (typeof name === 'undefined' || name === null) {
 			throw new Error(`Name must be a string but is '${name}'.`);
 		}
@@ -126,12 +120,14 @@ Polymer.SuggestTextareaBehavior = {
 		var newCursorPos = specialCharPos + name.length;
 		this.textarea.selectionStart = newCursorPos;
 		this.textarea.selectionEnd = newCursorPos;
-	},
-	_computeSuggestQuery: function(value) {
+	}
+
+	_computeSuggestQuery(value) {
 		return this._calcSuggestQuery(value, this._getCursorPos());
-	},
+	}
+
 	// Separate method to simplify unit testing
-	_calcSuggestQuery: function(value, cursorPos) {
+	_calcSuggestQuery(value, cursorPos) {
 		// Find last special character before the cursor position
 		var specialCharPos = this._getSpecialCharPosition(value, cursorPos);
 		if (specialCharPos < 0) {
@@ -139,8 +135,9 @@ Polymer.SuggestTextareaBehavior = {
 		}
 
 		return value.substring(specialCharPos + 1, cursorPos);
-	},
-	_computeValueWithIds: function(value, _replacements) {
+	}
+
+	_computeValueWithIds(value, _replacements) {
 		if (!value || !_replacements) {
 			// Ignore initialization call
 			return;
@@ -150,17 +147,17 @@ Polymer.SuggestTextareaBehavior = {
 			valueWithIds = valueWithIds.replace(replacement.name, this.specialChar + replacement.id);
 		}.bind(this));
 		return valueWithIds;
-	},
+	}
+
 	// Helper
-	_getCursorPos: function() {
+	_getCursorPos() {
 		// TODO: Remove once the cursor position is bound
 		// @see https://github.com/Polymer/paper-input/issues/185
 		return this.textarea.selectionStart;
-	},
-	_getSpecialCharPosition: function(value, cursorPos) {
+	}
+
+	_getSpecialCharPosition(value, cursorPos) {
 		// Finds the last special character before the cursor
 		return value.substring(0, cursorPos).lastIndexOf(this.specialChar);
 	}
 };
-
-</script>
