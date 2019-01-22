@@ -1,10 +1,10 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 
-import { SuggestTextareaMixin } from './suggest-textarea-mixin';
+import {SuggestTextareaMixin} from './suggest-textarea-mixin';
 
 /**
  * A textarea that provides suggestions as the user types.
- * 
+ *
  * ### Example
  * ```html
  * <iron-suggest-textarea
@@ -13,7 +13,7 @@ import { SuggestTextareaMixin } from './suggest-textarea-mixin';
  *   value-with-ids={{valueWithIds}}>
  * </iron-suggest-textarea>
  * ```
- * 
+ *
  * @demo demo/iron-suggest-textarea.html
  */
 class IronSuggestTextarea extends SuggestTextareaMixin(PolymerElement) {
@@ -41,12 +41,13 @@ class IronSuggestTextarea extends SuggestTextareaMixin(PolymerElement) {
 	get textarea() {
 		return this.$.text;
 	}
-	
+
 	/**
-		* Fired when the user focuses the textarea
-		*
-		* @event focus
-		*/
+	 * Fired when the user focuses the textarea
+	 *
+	 * @event focus
+	 * @returns {void}
+	 */
 	_onFocus() {
 		this.dispatchEvent(new CustomEvent('focus'));
 	}

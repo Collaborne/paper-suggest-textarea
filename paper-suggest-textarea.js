@@ -1,7 +1,7 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
-import '@polymer/paper-input/paper-textarea'
+import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
+import '@polymer/paper-input/paper-textarea';
 
-import { SuggestTextareaMixin } from './suggest-textarea-mixin';
+import {SuggestTextareaMixin} from './suggest-textarea-mixin';
 
 /**
  * A Material Design textarea that provides suggestions as the user types.

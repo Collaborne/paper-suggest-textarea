@@ -1,22 +1,17 @@
 /**
- * textarea that provides suggestions as the user types
+ * Textarea that provides suggestions as the user types
  */
+
 export const SuggestTextareaMixin = parent => class SuggestTextareaMixinImpl extends parent {
 	static get properties() {
 		return {
-			/**
-			 * Value as shown in the textarea
-			 */
-			value: {
-				type: String,
-				notify: true
-			},
 
 			/**
-			 * Placeholder of the textarea
+			 * Contains replacements like {id:'joe', name:'Joe Plumber'}
 			 */
-			placeholder: {
-				type: String
+			_replacements: {
+				type: Array,
+				value: [],
 			},
 
 			/**
@@ -25,50 +20,58 @@ export const SuggestTextareaMixin = parent => class SuggestTextareaMixinImpl ext
 			autofocus: Boolean,
 
 			/**
-			 * Character indicating when suggestions should be shown
-			 */
-			specialChar: {
-				type: String,
-				value: '@'
-			},
-
-			/**
 			 * Maximum number of rows for the textarea
 			 */
 			maxRows: Number,
 
 			/**
+			 * Placeholder of the textarea
+			 */
+			placeholder: {
+				type: String,
+			},
+
+			/**
+			 * Character indicating when suggestions should be shown
+			 */
+			specialChar: {
+				type: String,
+				value: '@',
+			},
+
+			/**
 			 * Query for which suggestions should be shown
 			 */
 			suggestQuery: {
-				type: String,
-				notify: true,
 				computed: '_computeSuggestQuery(value)',
-				readOnly: true
+				notify: true,
+				readOnly: true,
+				type: String,
+			},
+
+			/**
+			 * Value as shown in the textarea
+			 */
+			value: {
+				notify: true,
+				type: String,
 			},
 
 			/**
 			 * Value of the textarea but all names replaced by IDs
 			 */
 			valueWithIds: {
-				type: String,
-				notify: true,
 				computed: '_computeValueWithIds(value,_replacements)',
-				readOnly: true
+				notify: true,
+				readOnly: true,
+				type: String,
 			},
-
-			/**
-			 * Contains replacements like {id:'joe', name:'Joe Plumber'}
-			 */
-			_replacements: {
-				type: Array,
-				value: []
-			}
 		};
 	}
 
 	/**
 	 * Focuses on the input element
+	 * @returns {void}
 	 */
 	focus() {
 		// TODO: Simplify once focus() is exposed by <paper-textarea>
@@ -77,8 +80,9 @@ export const SuggestTextareaMixin = parent => class SuggestTextareaMixinImpl ext
 
 	/**
 	 * Adds with which an ID the name should be replaced
-	 * @param  {String} id   ID beloning to the name
-	 * @param  {String} name Name beloning to the ID
+	 * @param {string} id   ID beloning to the name
+	 * @param {string} name Name beloning to the ID
+	 * @returns {void}
 	 */
 	addReplacement(id, name) {
 		this.push('_replacements', {id: id, name: name});
@@ -86,7 +90,8 @@ export const SuggestTextareaMixin = parent => class SuggestTextareaMixinImpl ext
 
 	/**
 	 * Replaces the currently entered text with a specific name
-	 * @param  {String} name Full name
+	 * @param {string} name Full name
+	 * @returns {void}
 	 */
 	replaceCurrentSelection(name) {
 		this._replaceCurrentSelection(name, this._getCursorPos());
@@ -94,6 +99,7 @@ export const SuggestTextareaMixin = parent => class SuggestTextareaMixinImpl ext
 
 	/**
 	 * Removes all stored replacements
+	 * @returns {void}
 	 */
 	clearReplacements() {
 		this._replacements = [];
@@ -101,15 +107,16 @@ export const SuggestTextareaMixin = parent => class SuggestTextareaMixinImpl ext
 
 	/**
 	 * Separate method to simplify unit testing
-	 * @param  {String} name      Replaces the text at the cursor with the given name
-	 * @param  {Number} cursorPos Position where the cursor is within the text
+	 * @param {string} name      Replaces the text at the cursor with the given name
+	 * @param {Number} cursorPos Position where the cursor is within the text
+	 * @returns {void}
 	 */
 	_replaceCurrentSelection(name, cursorPos) {
 		if (typeof name === 'undefined' || name === null) {
 			throw new Error(`Name must be a string but is '${name}'.`);
 		}
 
-		var specialCharPos = this._getSpecialCharPosition(this.value, cursorPos);
+		const specialCharPos = this._getSpecialCharPosition(this.value, cursorPos);
 		if (specialCharPos < 0) {
 			return;
 		}
@@ -117,7 +124,7 @@ export const SuggestTextareaMixin = parent => class SuggestTextareaMixinImpl ext
 		this.value = this.value.substring(0, specialCharPos) + name + this.value.substring(cursorPos);
 
 		// Set cursor to the end of the replaced text
-		var newCursorPos = specialCharPos + name.length;
+		const newCursorPos = specialCharPos + name.length;
 		this.textarea.selectionStart = newCursorPos;
 		this.textarea.selectionEnd = newCursorPos;
 	}
@@ -129,7 +136,7 @@ export const SuggestTextareaMixin = parent => class SuggestTextareaMixinImpl ext
 	// Separate method to simplify unit testing
 	_calcSuggestQuery(value, cursorPos) {
 		// Find last special character before the cursor position
-		var specialCharPos = this._getSpecialCharPosition(value, cursorPos);
+		const specialCharPos = this._getSpecialCharPosition(value, cursorPos);
 		if (specialCharPos < 0) {
 			return '';
 		}
@@ -140,12 +147,12 @@ export const SuggestTextareaMixin = parent => class SuggestTextareaMixinImpl ext
 	_computeValueWithIds(value, _replacements) {
 		if (!value || !_replacements) {
 			// Ignore initialization call
-			return;
+			return undefined;
 		}
-		var valueWithIds = value;
-		_replacements.forEach(function(replacement) {
+		let valueWithIds = value;
+		_replacements.forEach(replacement => {
 			valueWithIds = valueWithIds.replace(replacement.name, this.specialChar + replacement.id);
-		}.bind(this));
+		});
 		return valueWithIds;
 	}
 

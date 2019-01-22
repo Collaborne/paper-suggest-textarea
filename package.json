@@ -12,15 +12,20 @@
   "homepage": "https://github.com/collaborne/paper-suggest-textarea",
   "name": "@collaborne/paper-suggest-textarea",
   "version": "3.0.0",
-  "resolutions": {
-    "inherits": "2.0.3",
-    "samsam": "1.1.3",
-    "supports-color": "3.1.2",
-    "type-detect": "1.0.0"
-  },
   "main": "paper-suggest-textarea.js",
-  "author": "collaborne",
-  "license": "Apache 2",
+  "author": "Collaborne B.V.",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Collaborne/paper-suggest-textarea/issues"
+  },
+  "scripts": {
+    "lint": "eslint . && polymer lint",
+    "test": "npm run lint && echo 'No tests yet'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Collaborne/paper-suggest-textarea.git"
+  },
   "dependencies": {
     "@polymer/paper-input": "^3.0.1",
     "@polymer/polymer": "^3.0.0"
@@ -28,6 +33,8 @@
   "devDependencies": {
     "@polymer/iron-component-page": "^4.0.0",
     "@polymer/iron-demo-helpers": "^3.0.0",
-    "@webcomponents/webcomponentsjs": "^2.2.4"
+    "eslint": "^5.12.1",
+    "eslint-config-collaborne": "^1.5.0",
+    "polymer-cli": "^1.9.5"
   }
 }

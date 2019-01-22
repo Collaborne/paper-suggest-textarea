@@ -1,19 +1,19 @@
 dist: trusty
 group: beta
-
 language: node_js
 node_js:
 - node
-addons:
-  firefox: latest-esr
 cache:
   directories:
   - node_modules
-  - "$HOME/.cache/bower"
 before_install:
-- "if [ -d node_modules ] && [ x$(cat node_modules/.last-node-version 2>/dev/null) != x$(node -e 'console.log(process.version)') ]; then npm rebuild && node -e 'console.log(process.version)' > node_modules/.last-node-version; fi"
-before_script:
-- $(npm bin)/bower install
-- $(npm bin)/polylint --no-recursion
-script:
-- LAUNCHPAD_BROWSERS=firefox xvfb-run $(npm bin)/wct
+- if [ -d node_modules ] && [ x$(cat node_modules/.last-node-version 2>/dev/null) != x$(node -e 'console.log(process.version)') ]; then npm rebuild --update-binary && node -e 'console.log(process.version)' > node_modules/.last-node-version; fi
+deploy:
+  skip_cleanup: true
+  provider: npm
+  email: npm@collaborne.com
+  api_key:
+    secure: "WzG0E2Zty5y4lQ9AZB7ZfQLTbtx90Ti1h6piLuJQHHQ3oNsmUcb7gUjsVCLBoN4VrTOJVCqfY2NWYIbzUlpP48iJxQKgjjcrnGtb/i+cMa7pdU7MmUdztjiX78bq0/oTBvGeJO7KMi9GAEckj1nqIeA1wTJjVoQKRrcZWwM4A4HruzIYC54rXJLeQjF9iYdhwJFawJrPW1b8DOku2LJk7d3V5WukLlw/lX9WXpYSd0TSrKNTco4QPr87vxvNimyxnaX60iKWHGgLjvXM3hKNH6SiXszRw+WrzRXStUXsvZPZdP2aqxQaZEpY1eYoQEazo9I8G9Cb/WjHJATWs9NdxnQJ1ZgQdOqo6tGpjd2bJBU23KN+6WiS3ldd+5KM6UhgsnhwdWZH/tAAodoVq1anTBBZxbxd8FdpaoaXnLrE06kK/LAi4LZCrzzwkkXDWsVhQL7OUDQV1n7oRFI+5zbbZVH88RinOd6ZI2XdrkZ9MYk0HBNx3IbMiKlyhQTd3KRYekr21Pr0yEZuUv+adAHGMagxbA0cMhhqXlEnJ6BQKIUwneppzWWA24X3WGSC+TeO9su2iT/uP0cBdRqJsq5FwYo/YUdRgyS4gXUuEwElcUjTp1yJ0tJCakKA1V5qYyd4l8ZU9ceGkN0vy0D4YgWPESnUXeTy/snBJ7XcIpcgknY="
+  on:
+    tags: true
+    condition: $(node -e 'console.log("v" + require("./package.json").version)') = ${TRAVIS_TAG}
