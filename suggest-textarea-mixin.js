@@ -163,8 +163,14 @@ export const SuggestTextareaMixin = parent => class SuggestTextareaMixinImpl ext
 		return this.textarea.selectionStart;
 	}
 
+	// Finds the last special character before the cursor
 	_getSpecialCharPosition(value, cursorPos) {
-		// Finds the last special character before the cursor
-		return value.substring(0, cursorPos).lastIndexOf(this.specialChar);
+		// RegEx to find @ signs at the beginning or after a whitespace. It allows for email addresses to be entered.
+		const REGEX_AT = /(?:^|\s)@([^\s]*(?: [^\s@]*)?)$/g;
+
+		const valueBeforeCursor = value.substring(0, cursorPos);
+		const match = REGEX_AT.exec(valueBeforeCursor);
+
+		return match ? match.index + 1 : -1;
 	}
 };
