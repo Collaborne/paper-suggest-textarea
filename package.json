@@ -11,7 +11,7 @@
   ],
   "homepage": "https://github.com/collaborne/paper-suggest-textarea",
   "name": "@collaborne/paper-suggest-textarea",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "main": "paper-suggest-textarea.js",
   "author": "Collaborne B.V.",
   "license": "Apache-2.0",
