@@ -1,3 +1,5 @@
+import { Replacement } from './replacement';
+
 // RegEx to find @ signs at the beginning or after a whitespace. It allows for email addresses to be entered.
 const REGEX_AT = /(^|\s)@([^\s]*(?: [^\s@]*)?)$/g;
 

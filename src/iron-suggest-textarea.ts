@@ -1,5 +1,6 @@
 import { css, customElement, html, LitElement, property, query } from 'lit-element';
 
+import { Replacement } from './replacement';
 import { computeSuggestQuery, computeValueWithIds, replaceCurrentSelection } from './utils';
 
 /**
