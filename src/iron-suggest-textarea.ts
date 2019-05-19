@@ -94,10 +94,10 @@ export class IronSuggestTextarea extends LitElement {
 		return html`
 			<textarea
 				id="textarea"
-				value="${this.value}"
-				placeholder="${this.placeholder}"
-				max-rows="${this.maxRows}"
-				autofocus="${this.autofocus}"
+				.value="${this.value || ''}"
+				.placeholder="${this.placeholder || ''}"
+				.maxRows="${this.maxRows}"
+				?autofocus="${this.autofocus}"
 				@focus="${this.onFocus}"
 				@keyup="${this.onKeyup}"
 			></textarea>
