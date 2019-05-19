@@ -4,7 +4,7 @@ paper-suggest-textarea [![Travis state](https://travis-ci.org/Collaborne/paper-s
 [![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/Collabornepaper-suggest-textarea.svg)](https://vaadin.com/directory/component/Collabornepaper-suggest-textarea)
 =========
 
-A Material Design textarea that provides suggestions as the user types. The web components are built with [Polymer](https://www.polymer-project.org).
+A textarea that provides suggestions as the user types. The web components are built with LitElement.
 
 To use this element:
 

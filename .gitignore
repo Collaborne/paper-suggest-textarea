@@ -1,8 +1,6 @@
 /node_modules/
-
-*.orig
-*.rej
-*.porig
+/dist/
+/.vscode/
 
 npm-shrinkwrap.json
 package-lock.json

@@ -1,5 +1,5 @@
 {
-  "description": "A Material Design textarea that provides suggestions as the user types (Polymer)",
+  "description": "A textarea that provides suggestions as the user types (LitElement)",
   "keywords": [
     "web-components",
     "polymer",
@@ -7,20 +7,28 @@
     "material design",
     "textarea",
     "input",
-    "suggest"
+    "suggest",
+    "litelement"
   ],
   "homepage": "https://github.com/collaborne/paper-suggest-textarea",
   "name": "@collaborne/paper-suggest-textarea",
   "version": "3.1.0",
-  "main": "paper-suggest-textarea.js",
+  "main": "dist/iron-suggest-textarea.js",
+  "types": "dist/iron-suggest-textarea.d.ts",
   "author": "Collaborne B.V.",
   "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
   "bugs": {
     "url": "https://github.com/Collaborne/paper-suggest-textarea/issues"
   },
   "scripts": {
-    "lint": "eslint . && polymer lint",
-    "test": "npm run lint && echo 'No tests yet'"
+    "build": "node_modules/typescript/bin/tsc",
+    "lint": "tslint -c tslint.json \"src/**/*.ts\"",
+    "test": "TS_NODE_CACHE=false TS_NODE_COMPILER_OPTIONS='{ \"module\": \"commonjs\" }' TS_NODE_FILES=true node ${_NODE_ARGS} $(npm bin)/_mocha --recursive -r ts-node/register \"test/**/*.ts\"",
+    "prepublish": "npm run lint && npm run build",
+    "start-dev": "node_modules/typescript/bin/tsc --watch & polymer serve"
   },
   "repository": {
     "type": "git",
@@ -28,13 +36,20 @@
   },
   "dependencies": {
     "@polymer/paper-input": "^3.0.1",
-    "@polymer/polymer": "^3.0.0"
+    "@polymer/polymer": "3.1.0",
+    "lit-element": "^2.1.0"
   },
   "devDependencies": {
     "@polymer/iron-component-page": "^4.0.0",
     "@polymer/iron-demo-helpers": "^3.0.0",
-    "eslint": "^5.12.1",
-    "eslint-config-collaborne": "^1.5.0",
-    "polymer-cli": "^1.9.5"
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "polymer-cli": "^1.9.5",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.14.0",
+    "tslint-config-collaborne": "^0.0.4",
+    "typescript": "^3.3.4000"
   }
 }

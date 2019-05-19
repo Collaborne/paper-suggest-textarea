@@ -2,12 +2,11 @@
 <html>
 	<head>
 		<script type="module">
-			import '@webcomponents/webcomponentsjs/webcomponents-loader.js';
-			import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
-			import '@polymer/iron-demo-helpers/demo-snippet.js';
+			import '@webcomponents/webcomponentsjs/webcomponents-loader';
+			import '@polymer/iron-demo-helpers/demo-pages-shared-styles';
+			import '@polymer/iron-demo-helpers/demo-snippet';
 			import '@polymer/iron-input';
-			import '../iron-suggest-textarea.js';
-			import '../paper-suggest-textarea.js';
+			import '../dist/iron-suggest-textarea.js';
 		</script>
 	</head>
 
@@ -19,12 +18,11 @@
 					<template>
 						<iron-suggest-textarea
 							id="textarea"
-							value="{{value}}"
-							value-with-ids="{{valueWithIds}}"
-							suggest-query="{{suggestQuery}}"
 							autofocus
-							placeholder="Enter a text like 'Hi @joe'">
-						</iron-suggest-textarea>
+							placeholder="Enter a text like 'Hi @joe'"
+							on-suggest-query-changed="onSuggestQueryChanged"
+							on-value-with-ids-changed="onValueWithIdsChanged"
+						></iron-suggest-textarea>
 
 						<h2>Control</h2>
 						<div class="vertical-section">
@@ -38,49 +36,18 @@
 						</div>
 
 						<script>
-							var ironScope = document.querySelector('#iron');
-							ironScope.onReplace = function(e) {
-								this.$.textarea.addReplacement(this.id, this.suggestQuery);
-								this.$.textarea.replaceCurrentSelection(this.suggestQuery);
-								this.$.textarea.focus();
+							const scope = document.querySelector('#iron');
+							scope.onSuggestQueryChanged = e => {
+								scope.suggestQuery = e.detail.suggestQuery;
 							};
-						</script>
-					</template>
-				</dom-bind>
-			</template>
-		</demo-snippet>
-
-		<demo-snippet>
-			<template>
-				<h2>&lt;paper-suggest-textarea&gt;</h2>
-				<dom-bind id="paper">
-					<template>
-						<paper-suggest-textarea
-							id="textarea"
-							value="{{value}}"
-							value-with-ids="{{valueWithIds}}"
-							suggest-query="{{suggestQuery}}"
-							autofocus
-							placeholder="Enter a text like 'Hi @joe'">
-						</paper-suggest-textarea>
-
-						<h2>Control</h2>
-						<div class="vertical-section">
-							<div hidden$="[[!suggestQuery]]">
-								Replace name <iron-input bind-value="{{suggestQuery}}"><input></input></iron-input>
-								with ID: <iron-input bind-value="{{id}}"><input></input></iron-input>
-								<button on-tap="onReplace">Replace</button>
-							</div>
-							<br>
-							<div>Value with IDs <b>[[valueWithIds]]</b></div>
-						</div>
-
-						<script>
-							var paperScope = document.querySelector('#paper');
-							paperScope.onReplace = function(e) {
-								this.$.textarea.addReplacement(this.id, this.suggestQuery);
-								this.$.textarea.replaceCurrentSelection(this.suggestQuery);
-								this.$.textarea.focus();
+							scope.onValueWithIdsChanged = e => {
+								scope.valueWithIds = e.detail.valueWithIds;
+							};
+							scope.onReplace = e => {
+								const textarea = document.querySelector('#textarea');
+								textarea.addReplacement(scope.id, scope.suggestQuery);
+								textarea.replaceCurrentSelection(scope.suggestQuery);
+								textarea.focus();
 							};
 						</script>
 					</template>
