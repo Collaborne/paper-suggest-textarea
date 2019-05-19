@@ -53,6 +53,7 @@ export class IronSuggestTextarea extends LitElement {
 				font-size: var(--iron-suggest-textarea-font-size);
 				font-family: var(--iron-suggest-textarea-font-family);
 				color: var(--iron-suggest-textarea-color);
+				background: var(--iron-suggest-textarea-background);
 				outline: var(--iron-suggest-textarea-outline);
 				border: var(--iron-suggest-textarea-border);
 				border-radius: var(--iron-suggest-textarea-border-radius);
