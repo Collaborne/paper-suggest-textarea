@@ -46,8 +46,18 @@ export class IronSuggestTextarea extends LitElement {
 
 	static get styles() {
 		return css`
-			#text {
-				@apply --suggest-textarea;
+			#textarea {
+				width: 100%;
+				height: 100%;
+				box-sizing: border-box;
+				font-size: var(--iron-suggest-textarea-font-size);
+				font-family: var(--iron-suggest-textarea-font-family);
+				color: var(--iron-suggest-textarea-color);
+				outline: var(--iron-suggest-textarea-outline);
+				border: var(--iron-suggest-textarea-border);
+				border-radius: var(--iron-suggest-textarea-border-radius);
+				padding: var(--iron-suggest-textarea-padding);
+				resize: var(--iron-suggest-textarea-resize);
 			}
 		`;
 	}

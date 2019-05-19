@@ -16,6 +16,19 @@
 				<h2>&lt;iron-suggest-textarea&gt;</h2>
 				<dom-bind id="iron">
 					<template>
+						<style>
+							iron-suggest-textarea {
+								--iron-suggest-textarea-font-family: Arial;
+								--iron-suggest-textarea-font-size: 16px;
+								--iron-suggest-textarea-color: red;
+								--iron-suggest-textarea-outline: 0;
+								--iron-suggest-textarea-border: 3px solid black;
+								--iron-suggest-textarea-border-radius: 5px;
+								--iron-suggest-textarea-padding: 8px;
+								--iron-suggest-textarea-resize: vertical;
+							}
+						</style>
+
 						<iron-suggest-textarea
 							id="textarea"
 							autofocus
